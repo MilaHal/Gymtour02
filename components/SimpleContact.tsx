@@ -8,14 +8,14 @@ export default function SimpleContact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
-  }
+    message: '',
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState({
     name: false,
     email: false,
-    message: false
-  })
+    message: false,
+  });
 
   const validateEmail = (email: string) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i
@@ -150,3 +150,5 @@ export default function SimpleContact() {
     </section>
   )
 }
+// test změna
+// Malá změna pro Vercel
