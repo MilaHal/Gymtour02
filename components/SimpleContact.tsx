@@ -10,15 +10,16 @@ export default function SimpleContact() {
     email: '',
     message: '',
   })
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState({
     name: false,
     email: false,
     message: false,
-  });
+  })
 
   const validateEmail = (email: string) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return re.test(email)
   }
 
@@ -27,7 +28,6 @@ export default function SimpleContact() {
     setIsSubmitting(true)
     setErrors({ name: false, email: false, message: false })
 
-    // validace vstupů
     let hasError = false
     const newErrors = { name: false, email: false, message: false }
 
@@ -53,7 +53,7 @@ export default function SimpleContact() {
     }
 
     try {
-      const response = await fetch("https://formspree.io/f/xvgqqkea", {
+      const response = await fetch("https://getform.io/f/aoloxwqb", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,58 +79,26 @@ export default function SimpleContact() {
     <section id="kontakt" className="section-spacing bg-gymtour-gray">
       <div className="container-narrow">
         <div className="text-center mb-16">
-          <h2 className="text-gymtour-white mb-8" data-macaly="contact-title">
+          <h2 className="text-gymtour-white mb-8">
             Pojďme se<br />
             <span className="bg-gymtour-gradient bg-clip-text text-transparent">potkat</span>
           </h2>
-          <p className="text-xl text-gymtour-white/70" data-macaly="contact-description">
+          <p className="text-xl text-gymtour-white/70">
             Rádi vám poradíme se službou pro vaši posilovnu
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 mb-16">
           <div className="space-y-8">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-gymtour-gradient rounded-full flex items-center justify-center mr-4">
-                <Mail className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p className="text-gymtour-white font-semibold">Email</p>
-                <a href="mailto:info.gymtour@gmail.com" className="text-gymtour-white/70 hover:text-gymtour-purple transition-colors">info.gymtour@gmail.com</a>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-gymtour-gradient rounded-full flex items-center justify-center mr-4">
-                <Phone className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p className="text-gymtour-white font-semibold">Telefon</p>
-                <a href="tel:+420605061468" className="text-gymtour-white/70 hover:text-gymtour-purple transition-colors">+420 605 061 468</a>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-gymtour-gradient rounded-full flex items-center justify-center mr-4">
-                <Instagram className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p className="text-gymtour-white font-semibold">Instagram</p>
-                <a href="https://www.instagram.com/gymtourr/" target="_blank" rel="noopener noreferrer" className="text-gymtour-white/70 hover:text-gymtour-purple transition-colors">@gymtourr</a>
-              </div>
-            </div>
+            <ContactInfo />
           </div>
 
           <div className="bg-gymtour-black rounded-3xl p-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-gymtour-white mb-6" data-macaly="form-title">Napište nám</h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-gymtour-white mb-6">Napište nám</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <input id="name" type="text" placeholder="Vaše jméno" value={formData.name} onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))} required className={`w-full px-4 py-3 bg-gymtour-gray border ${errors.name ? 'border-red-500' : 'border-gymtour-white/20'} rounded-xl text-gymtour-white placeholder-gymtour-white/50 focus:outline-none focus:border-gymtour-purple`} />
-              </div>
-              <div>
-                <input id="email" type="email" placeholder="Váš email" value={formData.email} onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))} required className={`w-full px-4 py-3 bg-gymtour-gray border ${errors.email ? 'border-red-500' : 'border-gymtour-white/20'} rounded-xl text-gymtour-white placeholder-gymtour-white/50 focus:outline-none focus:border-gymtour-purple`} />
-              </div>
-              <div>
-                <textarea id="message" rows={4} placeholder="Vaše zpráva" value={formData.message} onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))} required className={`w-full px-4 py-3 bg-gymtour-gray border ${errors.message ? 'border-red-500' : 'border-gymtour-white/20'} rounded-xl text-gymtour-white placeholder-gymtour-white/50 focus:outline-none focus:border-gymtour-purple resize-none`} />
-              </div>
+              <FormInput id="name" label="Vaše jméno" value={formData.name} error={errors.name} onChange={(v) => setFormData(prev => ({ ...prev, name: v }))} />
+              <FormInput id="email" label="Váš email" value={formData.email} error={errors.email} onChange={(v) => setFormData(prev => ({ ...prev, email: v }))} type="email" />
+              <FormTextarea id="message" label="Vaše zpráva" value={formData.message} error={errors.message} onChange={(v) => setFormData(prev => ({ ...prev, message: v }))} />
               <Button type="submit" disabled={isSubmitting} className="w-full btn-primary py-3 text-lg font-semibold disabled:opacity-50">
                 {isSubmitting ? "Odesílání..." : "Odeslat zprávu"}
               </Button>
@@ -141,14 +109,50 @@ export default function SimpleContact() {
         <div className="text-center pt-12 border-t border-gymtour-white/10">
           <div className="flex items-center justify-center mb-8">
             <div className="w-20 h-20 md:w-24 md:h-24">
-              <img src="https://assets.macaly-user-data.dev/e7f5chgqdrg66as6f59ahzh4/rgp8xl61dpv4dex2gmky8d1p/F_Boq0x3mEk26ngltrQeK/logo-sede.png" alt="GYM TOUR - Virtuální fitness trenér, spodní logo" className="w-full h-full object-contain" data-macaly="footer-logo" />
+              <img src="https://assets.macaly-user-data.dev/e7f5chgqdrg66as6f59ahzh4/rgp8xl61dpv4dex2gmky8d1p/F_Boq0x3mEk26ngltrQeK/logo-sede.png" alt="Logo" className="w-full h-full object-contain" />
             </div>
           </div>
-          <p className="text-gymtour-white/50 text-sm" data-macaly="footer-copyright">© 2024 GYM TOUR. Všechna práva vyhrazena.</p>
+          <p className="text-gymtour-white/50 text-sm">© 2024 GYM TOUR. Všechna práva vyhrazena.</p>
         </div>
       </div>
     </section>
   )
 }
-// test změna
-// Malá změna pro Vercel
+
+function ContactInfo() {
+  return (
+    <>
+      <ContactRow icon={<Mail className="w-6 h-6 text-white" />} label="Email" value="info.gymtour@gmail.com" href="mailto:info.gymtour@gmail.com" />
+      <ContactRow icon={<Phone className="w-6 h-6 text-white" />} label="Telefon" value="+420 605 061 468" href="tel:+420605061468" />
+      <ContactRow icon={<Instagram className="w-6 h-6 text-white" />} label="Instagram" value="@gymtourr" href="https://www.instagram.com/gymtourr/" />
+    </>
+  )
+}
+
+function ContactRow({ icon, label, value, href }: { icon: JSX.Element, label: string, value: string, href: string }) {
+  return (
+    <div className="flex items-center">
+      <div className="w-12 h-12 bg-gymtour-gradient rounded-full flex items-center justify-center mr-4">
+        {icon}
+      </div>
+      <div>
+        <p className="text-gymtour-white font-semibold">{label}</p>
+        <a href={href} className="text-gymtour-white/70 hover:text-gymtour-purple transition-colors">{value}</a>
+      </div>
+    </div>
+  )
+}
+
+function FormInput({ id, label, value, onChange, error, type = "text" }: { id: string, label: string, value: string, onChange: (v: string) => void, error: boolean, type?: string }) {
+  return (
+    <input id={id} type={type} placeholder={label} value={value} onChange={(e) => onChange(e.target.value)} required
+      className={`w-full px-4 py-3 bg-gymtour-gray border ${error ? 'border-red-500' : 'border-gymtour-white/20'} rounded-xl text-gymtour-white placeholder-gymtour-white/50 focus:outline-none focus:border-gymtour-purple`} />
+  )
+}
+
+function FormTextarea({ id, label, value, onChange, error }: { id: string, label: string, value: string, onChange: (v: string) => void, error: boolean }) {
+  return (
+    <textarea id={id} rows={4} placeholder={label} value={value} onChange={(e) => onChange(e.target.value)} required
+      className={`w-full px-4 py-3 bg-gymtour-gray border ${error ? 'border-red-500' : 'border-gymtour-white/20'} rounded-xl text-gymtour-white placeholder-gymtour-white/50 focus:outline-none focus:border-gymtour-purple resize-none`} />
+  )
+}
