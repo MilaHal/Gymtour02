@@ -1,0 +1,4 @@
+export const metadata = {
+  title: "Virtuální fitness trenér | GYMTOUR",
+  description: "Vaše posilovna online. Interaktivní 3D prohlídky, které zaujmou nové klienty dříve, než vstoupí do dveří.",
+}
