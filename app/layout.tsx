@@ -1,5 +1,4 @@
 import "./globals.css";
-import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
   },
   description: "Virtuální prohlídka Vaší posilovny, která opravdu zaujme!",
   type: "website",
-  locale: "cs_CZ",
+  locale: "cs-CZ",
 };
 
 export default function RootLayout({
@@ -22,7 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="cs" className={inter.className}>
+      <head />
       <body>{children}</body>
     </html>
   );
 }
+
