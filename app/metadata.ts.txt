@@ -24,3 +24,4 @@ export default function RootLayout({
     </html>
   );
 }
+mv app/metadata.ts.txt app/metadata.ts
