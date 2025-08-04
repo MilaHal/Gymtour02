@@ -4,14 +4,13 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "GYM TOUR - Virtuální fitness trenér vaší posilovny",
-  description: "Moderní způsob jak poznat posilovnu ještě před první návštěvou. 360° virtuální prohlídka s interaktivním trenérem pro vaše zákazníky.",
-  keywords: "virtuální prohlídka, fitness trenér, posilovna, 360°, gymtour, virtuální realita",
-  authors: [{ name: "GYM TOUR" }],
-  openGraph: {
-    title: "GYM TOUR - Virtuální fitness trenér",
-    description: "360° virtuální prohlídka posilovny s interaktivním trenérem",
+export const metadata = {
+  title: {
+    default: "Virtuální fitness trenér | GYMTOUR",
+    template: "%s | GYMTOUR"
+  },
+  description: "Virtuální prohlídka Vaší posilovny, která opravdu zaujme!."
+}
     type: "website",
     locale: "cs_CZ"
   }
@@ -32,3 +31,4 @@ export default function RootLayout({
     </html>
   );
 }
+Aktualizace metadata (title + description)
