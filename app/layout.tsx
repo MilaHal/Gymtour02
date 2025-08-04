@@ -3,10 +3,8 @@ import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-// Konfigurace písma Inter
 const inter = Inter({ subsets: ["latin"] });
 
-// Definice metadata pro SEO (titulek, popisek, atd.)
 export const metadata: Metadata = {
   title: {
     default: "Virtuální fitness trenér | GYMTOUR",
@@ -17,7 +15,6 @@ export const metadata: Metadata = {
   locale: "cs_CZ",
 };
 
-// RootLayout komponenta (obal pro všechny stránky)
 export default function RootLayout({
   children,
 }: {
